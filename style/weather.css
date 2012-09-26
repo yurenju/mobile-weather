@@ -1,6 +1,7 @@
 body {
 	background-color: #1A1A1A;
 	color: #FFF;
+	height: 100%;
 }
 
 #container {
@@ -18,7 +19,7 @@ body {
 }
 
 #district {
-	font-size: xx-large;
+	font-size: 200%;
 	-moz-box-flex: 1;
 	display:-moz-box;
 	-moz-box-orient:horizontal;
@@ -60,7 +61,7 @@ input[type=checkbox] {
 }
 
 #tabs {
-	min-height: 350px;
+	height: 350px;
 	position: relative;;
 	width: 100%;
 }
@@ -71,14 +72,17 @@ input[type=checkbox] {
 	left: 0;
 	top: 0;
 	position: absolute;
+	visibility: hidden;
 }
 
 input[type=checkbox]:not(:checked) ~ div#weekly {
 	z-index: 1;
+	visibility: visible;
 }
 
 input[type=checkbox]:checked ~ div#diagram {
 	z-index: 1;
+	visibility: visible;
 }
 
 svg {
