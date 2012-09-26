@@ -1,0 +1,124 @@
+body {
+	background-color: #1A1A1A;
+	color: #FFF;
+}
+
+#container {
+	margin: 10px;
+	padding: 10px;
+	border-radius: 5px;
+	background-image: -moz-radial-gradient(center top, circle closest-corner, #666666 0%, #000000 100%);
+	box-shadow: 0 0 5px 5px #000;
+}
+
+#header {
+	width: 100%;
+	display: -moz-box;
+	border-bottom: 2px solid rgba(0,0,0,0.2);
+}
+
+#district {
+	font-size: xx-large;
+	-moz-box-flex: 1;
+	display:-moz-box;
+	-moz-box-orient:horizontal;
+	-moz-box-align:center;
+}
+
+#current-temp {
+	font-size: 500%;
+}
+
+.hbox {
+	display: -moz-box;
+	-moz-box-orient: horizontal; 
+	width: 100%;
+	margin: 10px;
+	margin-bottom: 20px;
+}
+
+table {
+	width: 100%;
+}
+
+td, th {
+	text-align: center;
+}
+
+#current-humidity, #current-wind {
+	color: #aaa;
+}
+
+#hourly {
+	visibility: collapse;
+}
+
+input[type=checkbox] {
+   position: absolute;
+   top: -9999px;
+   left: -9999px;
+}
+
+#tabs {
+	min-height: 350px;
+	position: relative;;
+	width: 100%;
+}
+
+#tabs > div {
+	width: 100%;
+	z-index: -2;
+	left: 0;
+	top: 0;
+	position: absolute;
+}
+
+input[type=checkbox]:not(:checked) ~ div#weekly {
+	z-index: 1;
+}
+
+input[type=checkbox]:checked ~ div#diagram {
+	z-index: 1;
+}
+
+svg {
+  display:block;
+  border:1px solid #ccc;
+  width:90%;
+  margin: auto;
+ 
+}
+
+.selected-temp {
+	font-size: 220%;
+}
+
+.selected-temp-icon {
+	margin-right: 10px;
+}
+
+.halign-center {
+	display:-moz-box;
+	-moz-box-orient:horizontal;
+	-moz-box-align:center;
+}
+
+#selected-details {
+	margin-left: 50px;
+}
+
+.halign-center {
+	display:-moz-box;
+	-moz-box-orient:horizontal;
+	-moz-box-align:center;
+}
+
+#selected-temp-group {
+	display: -moz-box;
+	-moz-box-orient:vertical;
+}
+
+.temp-icon-text {
+	display: -moz-box;
+	margin: 5px;
+}

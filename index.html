@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" href="style/weather.css" type="text/css" media="screen">
+	<script type="text/javascript" src="js/weather.js"></script>
+</head>
+<body>
+	<div id="container">
+		<div id="header">
+			<div id="district">Beitou District</div>
+			<div id="details-icon"><label for="toggle"><img src="style/images/details.png" alt="details button" /></label></div>
+		</div>
+		<div id="tabs">
+			<input type="checkbox" id="toggle" />
+			<div id="diagram">
+				<div class="hbox">
+					<div id="selected-temp-group">
+						<div class="temp-icon-text">
+							<img class="selected-temp-icon" src="style/images/temp-high.png" alt="high tempature of selected date">
+							<span class="selected-temp halign-center">26°</span>
+						</div>
+						<div class="temp-icon-text">
+							<img class="selected-temp-icon" src="style/images/temp-low.png" alt="low tempature of selected date">
+							<span class="selected-temp halign-center">26°</span>
+						</div>
+					</div>
+					<div id="selected-details">
+						--° 25°<br />
+						Mostly Cloudy<br />
+						Wind: -- km/h<br />
+						Humidity: 74%
+					</div>
+				</div>
+				<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  viewBox="0 0 500 300">
+					<defs>
+						<linearGradient id="gradient-high" x1="0%" y1="0%" x2="0%" y2="100%">
+						<stop
+						style="stop-color:#edd400;stop-opacity:1" offset="0" />
+						<stop
+						style="stop-color:#edd400;stop-opacity:0.4" offset="1" />
+						</linearGradient>
+						<linearGradient id="gradient-low" x1="0%" y1="0%" x2="0%" y2="100%">
+							<stop
+							style="stop-color:#729fcf;stop-opacity:1" offset="0" />
+							<stop
+							style="stop-color:#204a87;stop-opacity:1" offset="1" />
+						</linearGradient>
+					</defs>
+					<path
+					d="M 0,30 100,30 200,120 300,150 400,150 500,150" 
+					style="fill:none;stroke:#FFFFFF;stroke-width:5" />
+					<path
+					d="M 0,30 100,30 200,120 300,150 400,150 500,150 500,300 0,300 Z" 
+					style="fill:url(#gradient-high);stroke:none" />
+
+					<path
+					d="M 0,240 100,240 200,270 300,270 400,240 500,240"
+					style="fill:none;stroke:#FFFFFF;stroke-width:5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:4,2;stroke-dashoffset:0" />
+					<path
+					d="M 0,240 100,240 200,270 300,270 400,240 500,240 500,300 0,300 Z"
+					style="fill:url(#gradient-low);stroke:none" />
+				</svg>
+	</div>
+	<div id="weekly">
+		<div class="hbox">
+			<div id="current-weather-icon"><img src="style/images/weather-clear.png" alt="current weather icon"></div>
+			<div id="current-details">
+				<div id="current-temp">26°</div>
+				<span id="current-high">28°</span>
+				<span id="current-low">24°</span>
+				<div id="current-condition">Mostly Cloudy</div>
+				<div id="current-humidity">Humidity: <span>72</span>%</div>
+				<div id="current-wind">Wind: <span>29</span> km/h</div>
+			</div>
+			</div>
+			<table>
+				<tr>
+					<th>T</th>
+					<th>W</th>
+					<th>T</th>
+					<th>F</th>
+					<th>S</th>
+					<th>S</th>
+				</tr>
+				<tr>
+					<td><img src="style/images/48x48/weather-few-clouds.png" alt="" class="weather-icon"></td>
+					<td><img src="style/images/48x48/weather-few-clouds.png" alt="" class="weather-icon"></td>
+					<td><img src="style/images/48x48/weather-few-clouds.png" alt="" class="weather-icon"></td>
+					<td><img src="style/images/48x48/weather-few-clouds.png" alt="" class="weather-icon"></td>
+					<td><img src="style/images/48x48/weather-few-clouds.png" alt="" class="weather-icon"></td>
+					<td><img src="style/images/48x48/weather-few-clouds.png" alt="" class="weather-icon"></td>
+				</tr>
+				<tr>
+					<td class="high-temp">28°</td>
+					<td class="high-temp">28°</td>
+					<td class="high-temp">28°</td>
+					<td class="high-temp">28°</td>
+					<td class="high-temp">28°</td>
+					<td class="high-temp">28°</td>
+				</tr>
+				<tr>
+					<td class="low-temp">24°</td>
+					<td class="low-temp">24°</td>
+					<td class="low-temp">24°</td>
+					<td class="low-temp">24°</td>
+					<td class="low-temp">24°</td>
+					<td class="low-temp">24°</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>

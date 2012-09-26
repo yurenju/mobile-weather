@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="26"
+   height="37"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.2 r9819"
+   inkscape:export-filename="/home/yurenju/Dropbox/projects/weather/style/images/temp-high.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90"
+   sodipodi:docname="temp-high.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#000000"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="8"
+     inkscape:cx="26.813939"
+     inkscape:cy="21.380843"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-bottom="10"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     inkscape:window-width="1024"
+     inkscape:window-height="739"
+     inkscape:window-x="430"
+     inkscape:window-y="1080"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-884,-215.6479)">
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:1.5"
+       d="m 881.93566,250.52658 30.02171,0"
+       id="path3766"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <image
+       y="215.6479"
+       x="881"
+       id="image3819"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAA2tJREFU WIW9l09sVUUUxn8zt+/xnqK8WgkhKhEMKVCCGkmkMY0xdUOMuhCDC+MfQsRVF7ghcSEmWpqIDXFV a0yRhaWmutPExCgRkgqa+CShdMGf2Cq26uvrH9r33r0zc1zcVyxseu8APcld3My93/fNmW/OmVEi QpJQSi1+zbzRdfSsiNoUjzHSe+DVbUC0+KNE2CKS6LmO/NDRkS9PDcu0FSlVRfq/L8q+Q5+NAJm0 2DrR9K+PO1C6+cnWzZwZNZy6MMujW1sQaG595qX70oL5CMgKcPb0L3x8+H0mZiMqoSW/spGhr49X ALUUwOJo8BCgRITtrdvZddcWZmbnacwHiLiF8WSmqodPBkCEyICzFhEhsn7k3gKUUjgFOgjQShG5 1Lw3L+DXoZ/4qvcDlNZY6y/AxwOICC2P7+CFwjZmrlbiDKSy3v/h5wGEKALnHDhHZJwvv18GlNI4 DbohA9pgnMI3BZ4e0Pz47Q8MfNqLzRSoStYXyu8vAR7b+RSfrOxgX1FRiIYRFSyjAIHQQgiIhlAC /Kr6TdYBFIgCY9yS/9xyAd/0f4fSsfWMMze269srQERof/FpFrq0s8aL3FsACMZyrfIbu+xLoBEF qu4D46LlXQKlFMd7BlAKlICLrBe5twBjDM++thsbgjNQi+bjsrwMAjJ7O/uKWzau4+F7YfXL/eid X/BIyxM8dH8Tezv7fuOGc+GSkeJQGuw52HP4yOAJKYvImVmRK913S22gUS7+OSyTInJk8ITsOdjz IRAkxU6TgVzDivxbz7W3MTQG+uTbrG6aIRuUqV3+nKFReL69jYZcfj+QSwqaRkA+l8sybTXT0xXW /dzJ1TkIK7D5ynv8Ow9TRlMvDvmkoGnasdYKRksGGxmqc2BWxDPIGjARjE5G6Hg7Jp5YKhPWwoh/ SpNUJc+Flg5cGWwJTq/qwIURf5fKKJ3O12ky4Mrjfxy7eL74yoatOxhp7uLcpm4Q0BKSNRUunS9S Hh87BiTekyrF3fBOYP2bXX0nC01rC2sfbCHIxl4ztSrjv59jqvTXVM+B19uAy8BcEuw0AgLgHmD9 ro539695YMNuHcSHEGctE2OXBgY/eqe7Tj4J2FstAOIiUwDWAI1Atj4cAmVgApiifku+HQIgLjI5 4q224DgHVIAqcK0xJMH+D8/z68/p8l1IAAAAAElFTkSuQmCC "
+       height="32"
+       width="32" />
+  </g>
+</svg>
