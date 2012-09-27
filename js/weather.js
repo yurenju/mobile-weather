@@ -43,6 +43,7 @@ var Weather = {
 
 	updateWeather: function weather_updateWeather(result) {
 		var i;
+		var icon;
 		this.updateInner('#current-temp > span', result.data.current_condition[0].temp_C);
 		this.updateInner('#current-high > span', result.data.weather[0].tempMaxC);
 		this.updateInner('#current-low > span', result.data.weather[0].tempMinC);
@@ -50,9 +51,15 @@ var Weather = {
 		this.updateInner('#current-humidity > span', result.data.current_condition[0].humidity);
 		this.updateInner('#current-wind > span', result.data.current_condition[0].windspeedKmph);
 
+		icon = 'style/images/' + this.icons[result.data.current_condition[0].weatherCode]
+		this.updateIcon('#current-weather-icon > img', icon);
+
 		for (i = 0; i < 5; i++) {
 			this.updateInner('#high-temp-' + i, result.data.weather[i].tempMaxC);
 			this.updateInner('#low-temp-' + i, result.data.weather[i].tempMinC);
+
+			icon = 'style/images/48x48/' + this.icons[result.data.weather[i].weatherCode];
+			this.updateIcon('#weather-icon-' + i, icon);
 		}
 	},
 
@@ -71,6 +78,11 @@ var Weather = {
 	updateInner: function weather_updateInner(condition, value) {
 		var el = document.querySelector(condition);
 		el.innerHTML = value;
+	},
+
+	updateIcon: function weather_updateIcon(condition, src) {
+		var el = document.querySelector(condition);
+		el.setAttribute('src', src);
 	},
 
 	getDistrict: function weather_getDistrict(lat, lng) {
@@ -117,6 +129,14 @@ var Weather = {
 		var line = document.getElementById('selected-line');
 		var current = this.cursorPoint(evt);
 		line.setAttribute('transform', 'translate(' + current.x + ',0)');
+	},
+
+	icons: {
+		'353': 'weather-few-clouds.png',
+		'359': 'weather-showers.png',
+		'113': 'weather-clear.png',
+		'116': 'weather-few-clouds.png',
+		'356': 'weather-showers.png'
 	}
 };
 
