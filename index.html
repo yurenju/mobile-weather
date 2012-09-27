@@ -21,18 +21,20 @@
 					<div id="selected-temp-group">
 						<div class="temp-icon-text">
 							<img class="selected-temp-icon" src="style/images/temp-high.png" alt="high tempature of selected date">
-							<span class="selected-temp halign-center">26°</span>
+							<span class="selected-temp halign-center">
+								<span id="selected-temp-max">26</span>°
+							</span>
 						</div>
 						<div class="temp-icon-text">
 							<img class="selected-temp-icon" src="style/images/temp-low.png" alt="low tempature of selected date">
-							<span class="selected-temp halign-center">26°</span>
+							<span class="selected-temp halign-center">
+								<span id="selected-temp-min">26</span>°
+							</span>
 						</div>
 					</div>
 					<div id="selected-details">
-						--° 25°<br />
-						Mostly Cloudy<br />
-						Wind: -- km/h<br />
-						Humidity: 74%
+						<div><span id="selected-condition">Mostly Cloudy</span></div>
+						<div>Wind: <span id="selected-wind">--</span> km/h</div>
 					</div>
 				</div>
 				<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  viewBox="0 0 500 300">

@@ -6,6 +6,7 @@ var Weather = {
 	svg: null,
 	pt: null,
 	geocoder: null,
+	days: null,
 
 	init: function weather_init() {
 		this.initEvent();
@@ -44,6 +45,7 @@ var Weather = {
 	updateWeather: function weather_updateWeather(result) {
 		var i;
 		var icon;
+		this.days = result.data.weather;
 		this.updateInner('#current-temp > span', result.data.current_condition[0].temp_C);
 		this.updateInner('#current-high > span', result.data.weather[0].tempMaxC);
 		this.updateInner('#current-low > span', result.data.weather[0].tempMinC);
@@ -152,6 +154,23 @@ var Weather = {
 		document.getElementById('district').innerHTML = name;
 	},
 
+	updateSelected: function weather_updateSelected(x) {
+		var el;
+		var selected = Math.round(x/(500/4));
+
+		document.querySelector('#selected-temp-max').innerHTML =
+			this.days[selected].tempMaxC;
+
+		document.querySelector('#selected-temp-min').innerHTML =
+			this.days[selected].tempMinC;
+
+		document.querySelector('#selected-condition').innerHTML =
+			this.days[selected].weatherDesc[0].value;
+
+		document.querySelector('#selected-wind').innerHTML =
+			this.days[selected].windspeedKmph;
+	},
+
 	cursorPoint: function weather_cursorPoint(evt){
 		var target = evt.clientX === undefined ? evt.touches[0] : evt;
 		this.pt.x = target.clientX;
@@ -163,6 +182,8 @@ var Weather = {
 		var line = document.getElementById('selected-line');
 		var current = this.cursorPoint(evt);
 		line.setAttribute('transform', 'translate(' + current.x + ',0)');
+
+		this.updateSelected(current.x);
 	},
 
 	icons: {
@@ -170,7 +191,8 @@ var Weather = {
 		'359': 'weather-showers.png',
 		'113': 'weather-clear.png',
 		'116': 'weather-few-clouds.png',
-		'356': 'weather-showers.png'
+		'356': 'weather-showers.png',
+		'296': 'weather-showers-scattered.png'
 	}
 };
 

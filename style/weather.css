@@ -108,7 +108,8 @@ svg {
 }
 
 #selected-details {
-	margin-left: 50px;
+	margin-left: 10px;
+	font-size: large;
 }
 
 .halign-center {
@@ -125,4 +126,8 @@ svg {
 .temp-icon-text {
 	display: -moz-box;
 	margin: 5px;
+}
+
+#selected-details > div {
+	text-overflow: ellipsis;
 }
