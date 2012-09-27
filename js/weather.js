@@ -57,10 +57,44 @@ var Weather = {
 		for (i = 0; i < 5; i++) {
 			this.updateInner('#high-temp-' + i, result.data.weather[i].tempMaxC);
 			this.updateInner('#low-temp-' + i, result.data.weather[i].tempMinC);
-
 			icon = 'style/images/48x48/' + this.icons[result.data.weather[i].weatherCode];
 			this.updateIcon('#weather-icon-' + i, icon);
 		}
+
+		this.updateGraph(result.data);
+	},
+
+	updateGraph: function weather_updateGraph(data) {
+		var max = -1000;
+		var min = 1000;
+		var maxLine = '';
+		var minLine = '';
+		var i;
+		var yoffset;
+		var xoffset;
+
+		for (i = 0; i < 5; i++) {
+			if (data.weather[i].tempMaxC > max) {
+				max = data.weather[i].tempMaxC;
+			}
+			if (data.weather[i].tempMinC < min) {
+				min = data.weather[i].tempMinC;
+			}
+		}
+
+		yoffset = 300 / (max - min + 2);
+		xoffset = 500 / 4;
+
+		for (i = 0; i < 5; i++) {
+			maxLine += (i * xoffset).toString() + ',' +
+				((max - data.weather[i].tempMaxC + 1) * yoffset).toString() + ' ';
+			minLine += (i * xoffset).toString() + ',' +
+				((max - data.weather[i].tempMinC + 1) * yoffset).toString() + ' ';
+		}
+		document.querySelector('#max-temp-stroke').setAttribute('d', 'M ' + maxLine);
+		document.querySelector('#max-temp-fill').setAttribute('d', 'M ' + maxLine + '500,300 0,300 z');
+		document.querySelector('#min-temp-stroke').setAttribute('d', 'M ' + minLine);
+		document.querySelector('#min-temp-fill').setAttribute('d', 'M ' + minLine + '500,300 0,300 z');
 	},
 
 	updateWeekday: function weather_updateWeekday() {
