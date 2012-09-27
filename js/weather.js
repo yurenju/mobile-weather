@@ -1,6 +1,8 @@
 'use strict';
 
 var Weather = {
+	BASE_URL: 'http://free.worldweatheronline.com/feed/weather.ashx?format=json&num_of_days=5&key=ecc58979c2132816122609&callback=Weather.updateWeather&q=',
+
 	svg: null,
 	pt: null,
 	geocoder: null,
@@ -8,6 +10,7 @@ var Weather = {
 	init: function weather_init() {
 		this.initEvent();
 		this.initGeo();
+		this.updateWeekday();
 	},
 
 	initGeo: function weather_initGeo() {
@@ -16,16 +19,61 @@ var Weather = {
 		var geocoder = this.geocoder;
 		if (navigator.geolocation) {
 			//navigator.geolocation.getCurrentPosition(this.getPosSuccess, null);
-			var that = this;
-			navigator.geolocation.getCurrentPosition(function (position) {
+			navigator.geolocation.getCurrentPosition((function (position) {
 				var lat = position.coords.latitude;
 	    		var lng = position.coords.longitude;
-	    		that.fillDistrict(lat, lng);
-			});
+	    		this.getDistrict(lat, lng);
+	    		this.getWeather(lat, lng);
+			}).bind(this));
 		}
 	},
 
-	fillDistrict: function weather_fillDistrict(lat, lng) {
+	initEvent: function weather_initEvent() {
+		this.svg = document.getElementsByTagName('svg')[0];
+		this.svg.addEventListener('touchmove', this, false);
+		this.svg.addEventListener('mousemove', this, false);
+		this.pt = this.svg.createSVGPoint();
+	},
+
+	getWeather: function weather_getWeather(lat, lng) {
+		var script = document.createElement('script');
+		script.src = this.BASE_URL + '25.09,121.59';
+		document.getElementsByTagName('head')[0].appendChild(script);
+	},
+
+	updateWeather: function weather_updateWeather(result) {
+		var i;
+		this.updateInner('#current-temp > span', result.data.current_condition[0].temp_C);
+		this.updateInner('#current-high > span', result.data.weather[0].tempMaxC);
+		this.updateInner('#current-low > span', result.data.weather[0].tempMinC);
+		this.updateInner('#current-condition', result.data.current_condition[0].weatherDesc[0].value);
+		this.updateInner('#current-humidity > span', result.data.current_condition[0].humidity);
+		this.updateInner('#current-wind > span', result.data.current_condition[0].windspeedKmph);
+
+		for (i = 0; i < 5; i++) {
+			this.updateInner('#high-temp-' + i, result.data.weather[i].tempMaxC);
+			this.updateInner('#low-temp-' + i, result.data.weather[i].tempMinC);
+		}
+	},
+
+	updateWeekday: function weather_updateWeekday() {
+		var day = new Date().getDay();
+		var i;
+		var days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+
+		for (i = 0; i < 5; i++) {
+			var d = document.querySelector('#day-' + i);
+			d.innerHTML = days[(day+i) % 7];
+		}
+
+	},
+
+	updateInner: function weather_updateInner(condition, value) {
+		var el = document.querySelector(condition);
+		el.innerHTML = value;
+	},
+
+	getDistrict: function weather_getDistrict(lat, lng) {
 		var latlng = new google.maps.LatLng(lat, lng);
 		var that = this;
 		this.geocoder.geocode({'latLng': latlng}, function(results, status) {
@@ -58,13 +106,6 @@ var Weather = {
 		document.getElementById('district').innerHTML = name;
 	},
 
-	initEvent: function weather_initEvent() {
-		this.svg = document.getElementsByTagName('svg')[0];
-		this.svg.addEventListener('touchmove', this, false);
-		this.svg.addEventListener('mousemove', this, false);
-		this.pt = this.svg.createSVGPoint();
-	},
-
 	cursorPoint: function weather_cursorPoint(evt){
 		var target = evt.clientX === undefined ? evt.touches[0] : evt;
 		this.pt.x = target.clientX;
@@ -83,3 +124,7 @@ window.addEventListener('load', function weatLoad(evt) {
 	window.removeEventListener('load', weatLoad);
 	Weather.init();
 });
+
+function test() {
+	alert("");
+}
