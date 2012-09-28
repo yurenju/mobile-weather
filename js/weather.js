@@ -38,7 +38,7 @@ var Weather = {
 
 	getWeather: function weather_getWeather(lat, lng) {
 		var script = document.createElement('script');
-		script.src = this.BASE_URL + '25.09,121.59';
+		script.src = this.BASE_URL + lat + ',' + lng;
 		document.getElementsByTagName('head')[0].appendChild(script);
 	},
 
