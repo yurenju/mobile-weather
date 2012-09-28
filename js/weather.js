@@ -53,13 +53,13 @@ var Weather = {
 		this.updateInner('#current-humidity > span', result.data.current_condition[0].humidity);
 		this.updateInner('#current-wind > span', result.data.current_condition[0].windspeedKmph);
 
-		icon = 'style/images/' + this.icons[result.data.current_condition[0].weatherCode]
+		icon = 'style/images/' + this.icons[result.data.current_condition[0].weatherCode] + '.png';
 		this.updateIcon('#current-weather-icon > img', icon);
 
 		for (i = 0; i < 5; i++) {
 			this.updateInner('#high-temp-' + i, result.data.weather[i].tempMaxC);
 			this.updateInner('#low-temp-' + i, result.data.weather[i].tempMinC);
-			icon = 'style/images/48x48/' + this.icons[result.data.weather[i].weatherCode];
+			icon = 'style/images/48x48/' + this.icons[result.data.weather[i].weatherCode] + '.png';
 			this.updateIcon('#weather-icon-' + i, icon);
 		}
 
@@ -187,12 +187,14 @@ var Weather = {
 	},
 
 	icons: {
-		'353': 'weather-few-clouds.png',
-		'359': 'weather-showers.png',
-		'113': 'weather-clear.png',
-		'116': 'weather-few-clouds.png',
-		'356': 'weather-showers.png',
-		'296': 'weather-showers-scattered.png'
+		'353': 'weather-few-clouds',
+		'359': 'weather-showers',
+		'113': 'weather-clear',
+		'116': 'weather-few-clouds',
+		'356': 'weather-showers',
+		'296': 'weather-showers-scattered',
+		'302': 'weather-showers-scattered',
+		'263': 'weather-few-clouds'
 	}
 };
 
