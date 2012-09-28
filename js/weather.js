@@ -202,7 +202,3 @@ window.addEventListener('load', function weatLoad(evt) {
 	window.removeEventListener('load', weatLoad);
 	Weather.init();
 });
-
-function test() {
-	alert("");
-}
