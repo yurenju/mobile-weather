@@ -1,0 +1,18 @@
+{
+  "name": "Weather",
+  "description": "Mobile Weather",
+  "launch_path": "/mobile-weather/",
+  "developer": {
+    "name": "Yuren Ju",
+    "url": "http://yurenju.github.com/"
+  },
+  "version":"1.0",
+  "icons":{
+    "16":"http://testmanifest.com/icon-16.png",
+    "48":"http://testmanifest.com/icon-48.png",
+    "128":"http://testmanifest.com/icon-128.png"
+  },
+  "installs_allowed_from":[
+    "*"
+  ]
+}
