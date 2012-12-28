@@ -9,6 +9,11 @@ var Weather = {
   pt: null,
   geocoder: null,
   days: null,
+  line: document.getElementById('selected-line'),
+  selectedMax: document.querySelector('#selected-temp-max'),
+  selectedMin: document.querySelector('#selected-temp-min'),
+  selectedCondition: document.querySelector('#selected-condition'),
+  selectedWind: document.querySelector('#selected-wind'),
 
   init: function weather_init() {
     this.initEvent();
@@ -21,7 +26,6 @@ var Weather = {
     var that = this;
     var geocoder = this.geocoder;
     if (navigator.geolocation) {
-      //navigator.geolocation.getCurrentPosition(this.getPosSuccess, null);
       navigator.geolocation.getCurrentPosition((function(position) {
         var lat = position.coords.latitude;
           var lng = position.coords.longitude;
@@ -120,7 +124,6 @@ var Weather = {
       var d = document.querySelector('#day-' + i);
       d.innerHTML = days[(day + i) % 7];
     }
-
   },
 
   updateInner: function weather_updateInner(condition, value) {
@@ -135,7 +138,7 @@ var Weather = {
 
   getDistrict: function weather_getDistrict(lat, lng) {
     var latlng = new google.maps.LatLng(lat, lng);
-    var that = this;
+    var self = this;
     this.geocoder.geocode({'latLng': latlng}, function(res, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (res[1]) {
@@ -149,7 +152,7 @@ var Weather = {
               }
             }
           }
-          that.updateDistrict(district.long_name);
+          self.updateDistrict(district.long_name);
         } else {
           alert('No results found');
         }
@@ -167,17 +170,11 @@ var Weather = {
     var el;
     var selected = Math.round(x / (500 / 4));
 
-    document.querySelector('#selected-temp-max').innerHTML =
-      this.days[selected].tempMaxC;
-
-    document.querySelector('#selected-temp-min').innerHTML =
-      this.days[selected].tempMinC;
-
-    document.querySelector('#selected-condition').innerHTML =
+    this.selectedMax.textContent = this.days[selected].tempMaxC;
+    this.selectedMin.textContent = this.days[selected].tempMinC;
+    this.selectedWind = this.days[selected].windspeedKmph;
+    this.selectedCondition.textContent =
       this.days[selected].weatherDesc[0].value;
-
-    document.querySelector('#selected-wind').innerHTML =
-      this.days[selected].windspeedKmph;
   },
 
   cursorPoint: function weather_cursorPoint(evt) {
@@ -188,10 +185,8 @@ var Weather = {
   },
 
   handleEvent: function weather_handleEvent(evt) {
-    var line = document.getElementById('selected-line');
     var current = this.cursorPoint(evt);
-    line.setAttribute('transform', 'translate(' + current.x + ',0)');
-
+    this.line.setAttribute('transform', 'translate(' + current.x + ',0)');
     this.updateSelected(current.x);
   },
 
