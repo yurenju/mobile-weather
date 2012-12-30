@@ -5,17 +5,17 @@ var Weather = {
     'format=json&num_of_days=5&key=ecc58979c2132816122609&' +
     'callback=Weather.updateWeather&q=',
 
-  init: function weather_init(geocoder) {
-    this.geocoder = geocoder;
+  init: function weather_init() {
     this.getAllElements();
     this.initEvent();
-    this.initGeo();
     this.updateWeekday();
   },
 
   getAllElements: function weather_getAllElements() {
     var elements = ['temp-graph', 'selected-line', 'selected-temp-max',
-        'selected-temp-min', 'selected-condition', 'selected-wind'];
+        'selected-temp-min', 'selected-condition', 'selected-wind',
+        'current-condition', 'max-temp-stroke', 'max-temp-fill',
+        'min-temp-stroke', 'min-temp-fill', 'district'];
 
     var toCamelCase = function toCamelCase(str) {
       return str.replace(/\-(.)/g, function replacer(str, p1) {
@@ -30,14 +30,9 @@ var Weather = {
     this.currentTemp = document.querySelector('#current-temp > span');
     this.currentMax = document.querySelector('#current-high > span');
     this.currentMin = document.querySelector('#current-low > span');
-    this.currentCondition = document.querySelector('#current-condition');
     this.currentHumidity = document.querySelector('#current-humidity > span');
     this.currentWind = document.querySelector('#current-wind > span');
     this.currentIcon = document.querySelector('#current-weather-icon > img');
-    this.maxTempStroke = document.querySelector('#max-temp-stroke');
-    this.maxTempFill = document.querySelector('#max-temp-fill');
-    this.minTempStroke = document.querySelector('#min-temp-stroke');
-    this.minTempFill = document.querySelector('#min-temp-fill');
 
     for (var i = 0; i < 5; i++) {
       this['maxTemp' + i] = document.querySelector('#high-temp-' + i);
@@ -47,22 +42,20 @@ var Weather = {
     }
   },
 
-  initGeo: function weather_initGeo() {
-    var that = this;
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((function(position) {
-        var lat = position.coords.latitude;
-          var lng = position.coords.longitude;
-          this.getDistrict(lat, lng);
-          this.getWeather(lat, lng);
-      }).bind(this));
-    }
-  },
-
   initEvent: function weather_initEvent() {
     this.tempGraph.addEventListener('touchmove', this, false);
     this.tempGraph.addEventListener('mousemove', this, false);
     this.pt = this.tempGraph.createSVGPoint();
+  },
+
+  updateWeekday: function weather_updateWeekday(date) {
+    var day = date ? date.getDay() : (new Date()).getDay();
+    var i;
+    var days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+
+    for (i = 0; i < 5; i++) {
+      this['day' + i].textContent = days[(day + i) % 7];
+    }
   },
 
   getWeather: function weather_getWeather(lat, lng) {
@@ -130,44 +123,26 @@ var Weather = {
     this.minTempFill.setAttribute('d', 'M ' + minLine + '500,300 0,300 z');
   },
 
-  updateWeekday: function weather_updateWeekday() {
-    var day = new Date().getDay();
-    var i;
-    var days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-
-    for (i = 0; i < 5; i++) {
-      this['day' + i].textContent = days[(day + i) % 7];
-    }
-  },
-
-  getDistrict: function weather_getDistrict(lat, lng) {
-    var latlng = new google.maps.LatLng(lat, lng);
-    var self = this;
-    this.geocoder.geocode({'latLng': latlng}, function(res, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        if (res[1]) {
-          var district;
-          for (var i = 0; i < res[0].address_components.length; i++) {
-            var len = res[0].address_components[i].types.length;
-            for (var b = 0; b < len; b++) {
-              if (res[0].address_components[i].types[b] === 'locality') {
-                district = res[0].address_components[i];
-                break;
-              }
+  getDistrict: function weather_getDistrict(res, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      if (res[1]) {
+        var district;
+        for (var i = 0; i < res[0].address_components.length; i++) {
+          var len = res[0].address_components[i].types.length;
+          for (var b = 0; b < len; b++) {
+            if (res[0].address_components[i].types[b] === 'locality') {
+              district = res[0].address_components[i];
+              break;
             }
           }
-          self.updateDistrict(district.long_name);
-        } else {
-          alert('No results found');
         }
+        this.district.textContent = district.long_name;
       } else {
-        alert('Geocoder failed due to: ' + status);
+        alert('No results found');
       }
-    });
-  },
-
-  updateDistrict: function weather_updateDistrict(name) {
-    document.getElementById('district').innerHTML = name;
+    } else {
+      alert('Geocoder failed due to: ' + status);
+    }
   },
 
   updateSelected: function weather_updateSelected(x) {
@@ -189,9 +164,9 @@ var Weather = {
   },
 
   handleEvent: function weather_handleEvent(evt) {
-    var current = this.cursorPoint(evt);
-    this.selectedLine.setAttribute('transform', 'translate(' + current.x + ',0)');
-    this.updateSelected(current.x);
+    var cur = this.cursorPoint(evt);
+    this.selectedLine.setAttribute('transform', 'translate(' + cur.x + ',0)');
+    this.updateSelected(cur.x);
   },
 
   icons: {
@@ -208,5 +183,16 @@ var Weather = {
 
 window.addEventListener('load', function weatLoad(evt) {
   window.removeEventListener('load', weatLoad);
-  Weather.init(new google.maps.Geocoder());
+
+  var geocoder = new google.maps.Geocoder();
+  Weather.init();
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var coords = position.coords;
+      var latlng = new google.maps.LatLng(coords.latitude, coords.longitude);
+      geocoder.geocode({'latLng': latlng}, Weather.getDistrict.bind(Weather));
+      Weather.getWeather(coords.latitude, coords.longitude);
+    });
+  }
 });
