@@ -5,26 +5,50 @@ var Weather = {
     'format=json&num_of_days=5&key=ecc58979c2132816122609&' +
     'callback=Weather.updateWeather&q=',
 
-  svg: null,
-  pt: null,
-  geocoder: null,
-  days: null,
-  line: document.getElementById('selected-line'),
-  selectedMax: document.querySelector('#selected-temp-max'),
-  selectedMin: document.querySelector('#selected-temp-min'),
-  selectedCondition: document.querySelector('#selected-condition'),
-  selectedWind: document.querySelector('#selected-wind'),
-
-  init: function weather_init() {
+  init: function weather_init(geocoder) {
+    this.geocoder = geocoder;
+    this.getAllElements();
     this.initEvent();
     this.initGeo();
     this.updateWeekday();
   },
 
+  getAllElements: function weather_getAllElements() {
+    var elements = ['temp-graph', 'selected-line', 'selected-temp-max',
+        'selected-temp-min', 'selected-condition', 'selected-wind'];
+
+    var toCamelCase = function toCamelCase(str) {
+      return str.replace(/\-(.)/g, function replacer(str, p1) {
+        return p1.toUpperCase();
+      });
+    };
+
+    elements.forEach((function createElementRef(name) {
+      this[toCamelCase(name)] = document.getElementById(name);
+    }).bind(this));
+
+    this.currentTemp = document.querySelector('#current-temp > span');
+    this.currentMax = document.querySelector('#current-high > span');
+    this.currentMin = document.querySelector('#current-low > span');
+    this.currentCondition = document.querySelector('#current-condition');
+    this.currentHumidity = document.querySelector('#current-humidity > span');
+    this.currentWind = document.querySelector('#current-wind > span');
+    this.currentIcon = document.querySelector('#current-weather-icon > img');
+    this.maxTempStroke = document.querySelector('#max-temp-stroke');
+    this.maxTempFill = document.querySelector('#max-temp-fill');
+    this.minTempStroke = document.querySelector('#min-temp-stroke');
+    this.minTempFill = document.querySelector('#min-temp-fill');
+
+    for (var i = 0; i < 5; i++) {
+      this['maxTemp' + i] = document.querySelector('#high-temp-' + i);
+      this['minTemp' + i] = document.querySelector('#low-temp-' + i);
+      this['weatherIcon' + i] = document.querySelector('#weather-icon-' + i);
+      this['day' + i] = document.querySelector('#day-' + i);
+    }
+  },
+
   initGeo: function weather_initGeo() {
-    this.geocoder = new google.maps.Geocoder();
     var that = this;
-    var geocoder = this.geocoder;
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((function(position) {
         var lat = position.coords.latitude;
@@ -36,10 +60,9 @@ var Weather = {
   },
 
   initEvent: function weather_initEvent() {
-    this.svg = document.getElementsByTagName('svg')[0];
-    this.svg.addEventListener('touchmove', this, false);
-    this.svg.addEventListener('mousemove', this, false);
-    this.pt = this.svg.createSVGPoint();
+    this.tempGraph.addEventListener('touchmove', this, false);
+    this.tempGraph.addEventListener('mousemove', this, false);
+    this.pt = this.tempGraph.createSVGPoint();
   },
 
   getWeather: function weather_getWeather(lat, lng) {
@@ -53,26 +76,22 @@ var Weather = {
     var icon;
     var data = result.data;
     this.days = data.weather;
-    this.updateInner('#current-temp > span', data.current_condition[0].temp_C);
-    this.updateInner('#current-high > span', data.weather[0].tempMaxC);
-    this.updateInner('#current-low > span', data.weather[0].tempMinC);
-    this.updateInner('#current-condition',
-      data.current_condition[0].weatherDesc[0].value);
-    this.updateInner('#current-humidity > span',
-      data.current_condition[0].humidity);
-    this.updateInner('#current-wind > span',
-      data.current_condition[0].windspeedKmph);
+    this.currentTemp.textContent = data.current_condition[0].temp_C;
+    this.currentMax.textContent = data.weather[0].tempMaxC;
+    this.currentMin.textContent = data.weather[0].tempMinC;
+    this.currentHumidity.textContent = data.current_condition[0].humidity;
+    this.currentWind.textContent = data.current_condition[0].windspeedKmph;
+    this.currentCondition.textContent =
+      data.current_condition[0].weatherDesc[0].value;
 
-    icon = 'style/images/' +
+    this.currentIcon.src = 'style/images/' +
       this.icons[data.current_condition[0].weatherCode] + '.png';
-    this.updateIcon('#current-weather-icon > img', icon);
 
     for (i = 0; i < 5; i++) {
-      this.updateInner('#high-temp-' + i, data.weather[i].tempMaxC);
-      this.updateInner('#low-temp-' + i, data.weather[i].tempMinC);
-      icon = 'style/images/48x48/' +
+      this['maxTemp' + i].textContent = data.weather[i].tempMaxC;
+      this['minTemp' + i].textContent = data.weather[i].tempMinC;
+      this['weatherIcon' + i].src = 'style/images/48x48/' +
         this.icons[data.weather[i].weatherCode] + '.png';
-      this.updateIcon('#weather-icon-' + i, icon);
     }
 
     this.updateGraph(data);
@@ -105,14 +124,10 @@ var Weather = {
       minLine += (i * xoffset).toString() + ',' +
         ((max - data.weather[i].tempMinC + 1) * yoffset).toString() + ' ';
     }
-    document.querySelector('#max-temp-stroke')
-      .setAttribute('d', 'M ' + maxLine);
-    document.querySelector('#max-temp-fill')
-      .setAttribute('d', 'M ' + maxLine + '500,300 0,300 z');
-    document.querySelector('#min-temp-stroke')
-      .setAttribute('d', 'M ' + minLine);
-    document.querySelector('#min-temp-fill')
-      .setAttribute('d', 'M ' + minLine + '500,300 0,300 z');
+    this.maxTempStroke.setAttribute('d', 'M ' + maxLine);
+    this.maxTempFill.setAttribute('d', 'M ' + maxLine + '500,300 0,300 z');
+    this.minTempStroke.setAttribute('d', 'M ' + minLine);
+    this.minTempFill.setAttribute('d', 'M ' + minLine + '500,300 0,300 z');
   },
 
   updateWeekday: function weather_updateWeekday() {
@@ -121,19 +136,8 @@ var Weather = {
     var days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
     for (i = 0; i < 5; i++) {
-      var d = document.querySelector('#day-' + i);
-      d.innerHTML = days[(day + i) % 7];
+      this['day' + i].textContent = days[(day + i) % 7];
     }
-  },
-
-  updateInner: function weather_updateInner(condition, value) {
-    var el = document.querySelector(condition);
-    el.innerHTML = value;
-  },
-
-  updateIcon: function weather_updateIcon(condition, src) {
-    var el = document.querySelector(condition);
-    el.setAttribute('src', src);
   },
 
   getDistrict: function weather_getDistrict(lat, lng) {
@@ -170,8 +174,8 @@ var Weather = {
     var el;
     var selected = Math.round(x / (500 / 4));
 
-    this.selectedMax.textContent = this.days[selected].tempMaxC;
-    this.selectedMin.textContent = this.days[selected].tempMinC;
+    this.selectedTempMax.textContent = this.days[selected].tempMaxC;
+    this.selectedTempMin.textContent = this.days[selected].tempMinC;
     this.selectedWind = this.days[selected].windspeedKmph;
     this.selectedCondition.textContent =
       this.days[selected].weatherDesc[0].value;
@@ -181,12 +185,12 @@ var Weather = {
     var target = evt.clientX === undefined ? evt.touches[0] : evt;
     this.pt.x = target.clientX;
     this.pt.y = target.clientY;
-    return this.pt.matrixTransform(this.svg.getScreenCTM().inverse());
+    return this.pt.matrixTransform(this.tempGraph.getScreenCTM().inverse());
   },
 
   handleEvent: function weather_handleEvent(evt) {
     var current = this.cursorPoint(evt);
-    this.line.setAttribute('transform', 'translate(' + current.x + ',0)');
+    this.selectedLine.setAttribute('transform', 'translate(' + current.x + ',0)');
     this.updateSelected(current.x);
   },
 
@@ -204,5 +208,5 @@ var Weather = {
 
 window.addEventListener('load', function weatLoad(evt) {
   window.removeEventListener('load', weatLoad);
-  Weather.init();
+  Weather.init(new google.maps.Geocoder());
 });

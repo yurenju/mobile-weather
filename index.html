@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable:0">
 	<title></title>
 	<link rel="stylesheet" href="style/weather.css" type="text/css" media="screen">
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 	<script type="text/javascript" src="js/weather.js"></script>
 </head>
 <body>
@@ -37,7 +37,7 @@
 						<div>Wind: <span id="selected-wind">--</span> km/h</div>
 					</div>
 				</div>
-				<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  viewBox="0 0 500 300">
+				<svg id="temp-graph" xmlns="http://www.w3.org/2000/svg" version="1.1"  viewBox="0 0 500 300">
 					<defs>
 						<linearGradient id="gradient-high" x1="0%" y1="0%" x2="0%" y2="100%">
 						<stop
@@ -54,11 +54,11 @@
 					</defs>
 					<path
 					id='max-temp-stroke'
-					d="M 0,30 100,30 200,120 300,150 400,150 500,150" 
+					d="M 0,30 100,30 200,120 300,150 400,150 500,150"
 					style="fill:none;stroke:#FFFFFF;stroke-width:5" />
 					<path
 					id='max-temp-fill'
-					d="M 0,30 100,30 200,120 300,150 400,150 500,150 500,300 0,300 Z" 
+					d="M 0,30 100,30 200,120 300,150 400,150 500,150 500,300 0,300 Z"
 					style="fill:url(#gradient-high);stroke:none" />
 
 					<path
