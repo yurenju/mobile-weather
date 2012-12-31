@@ -7,6 +7,6 @@
     "jsdom": "*"
   },
   "scripts": {
-    "test": "node_modules/.bin/mocha test/weather_test.js"
+    "test": "node_modules/.bin/mocha -u tdd test/weather_test.js"
   }
 }

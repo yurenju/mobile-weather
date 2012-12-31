@@ -1,11 +1,17 @@
 'use strict';
 
+var window, document;
 var Weather = {
   BASE_URL: 'http://free.worldweatheronline.com/feed/weather.ashx?' +
     'format=json&num_of_days=5&key=ecc58979c2132816122609&' +
     'callback=Weather.updateWeather&q=',
 
-  init: function weather_init() {
+  init: function weather_init(win, doc) {
+    if (win && doc) {
+      window = win;
+      document = doc;
+    }
+
     this.getAllElements();
     this.initEvent();
     this.updateWeekday();
@@ -45,7 +51,9 @@ var Weather = {
   initEvent: function weather_initEvent() {
     this.tempGraph.addEventListener('touchmove', this, false);
     this.tempGraph.addEventListener('mousemove', this, false);
-    this.pt = this.tempGraph.createSVGPoint();
+    if (this.tempGraph.createSVGPoint) {
+      this.pt = this.tempGraph.createSVGPoint();
+    }
   },
 
   updateWeekday: function weather_updateWeekday(date) {
@@ -181,18 +189,6 @@ var Weather = {
   }
 };
 
-window.addEventListener('load', function weatLoad(evt) {
-  window.removeEventListener('load', weatLoad);
-
-  var geocoder = new google.maps.Geocoder();
-  Weather.init();
-
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      var coords = position.coords;
-      var latlng = new google.maps.LatLng(coords.latitude, coords.longitude);
-      geocoder.geocode({'latLng': latlng}, Weather.getDistrict.bind(Weather));
-      Weather.getWeather(coords.latitude, coords.longitude);
-    });
-  }
-});
+module.exports = {
+  Weather: Weather
+}

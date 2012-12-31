@@ -7,6 +7,23 @@
 	<link rel="stylesheet" href="style/weather.css" type="text/css" media="screen">
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 	<script type="text/javascript" src="js/weather.js"></script>
+	<script type="text/javascript">
+	  window.addEventListener('load', function weatLoad(evt) {
+	    window.removeEventListener('load', weatLoad);
+
+	    var geocoder = new google.maps.Geocoder();
+	    Weather.init();
+
+	    if (navigator.geolocation) {
+	      navigator.geolocation.getCurrentPosition(function(position) {
+	        var coords = position.coords;
+	        var latlng = new google.maps.LatLng(coords.latitude, coords.longitude);
+	        geocoder.geocode({'latLng': latlng}, Weather.getDistrict.bind(Weather));
+	        Weather.getWeather(coords.latitude, coords.longitude);
+	      });
+	    }
+	  });
+	</script>
 </head>
 <body>
 	<div id="container">
