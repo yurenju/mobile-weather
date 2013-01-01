@@ -16,4 +16,11 @@ suite('Weather', function() {
     assert.equal('current-temp', Weather.currentTemp.parentNode.id);
     assert.equal('high-temp-0', Weather['maxTemp0'].id);
   });
-})
+
+  test('updateWeekDay', function() {
+    //2013/1/1 is Tuesday
+    Weather.updateWeekday(new Date('Jan 01, 2013'));
+    assert.equal(Weather.day0.textContent, 'T', 'day0 is [T]uesday');
+    assert.equal(Weather.day4.textContent, 'S', 'day4 is [S]aturday');
+  });
+});
