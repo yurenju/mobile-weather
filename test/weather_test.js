@@ -18,6 +18,7 @@ suite('Weather', function() {
   });
 
   test('updateWeekday', function() {
+    Weather.init(window, document);
     //2013/1/1 is Tuesday
     Weather.updateWeekday(new Date('Jan 01, 2013'));
     assert.equal(Weather.day0.textContent, 'T', 'day0 is [T]uesday');
