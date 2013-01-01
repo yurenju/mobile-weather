@@ -17,7 +17,7 @@ suite('Weather', function() {
     assert.equal('high-temp-0', Weather['maxTemp0'].id);
   });
 
-  test('updateWeekDay', function() {
+  test('updateWeekday', function() {
     //2013/1/1 is Tuesday
     Weather.updateWeekday(new Date('Jan 01, 2013'));
     assert.equal(Weather.day0.textContent, 'T', 'day0 is [T]uesday');
