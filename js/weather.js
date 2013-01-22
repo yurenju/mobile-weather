@@ -1,6 +1,6 @@
 'use strict';
 
-var window, document;
+var window, document, module;
 var Weather = {
   BASE_URL: 'http://free.worldweatheronline.com/feed/weather.ashx?' +
     'format=json&num_of_days=5&key=ecc58979c2132816122609&' +
@@ -189,6 +189,9 @@ var Weather = {
   }
 };
 
-module.exports = {
-  Weather: Weather
+if (module) {
+  module.exports = {
+    Weather: Weather
+  }
 }
+
