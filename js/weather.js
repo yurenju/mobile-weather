@@ -192,6 +192,6 @@ var Weather = {
 if (module) {
   module.exports = {
     Weather: Weather
-  }
+  };
 }
 
