@@ -8,9 +8,8 @@
   },
   "version":"1.0",
   "icons":{
-    "16":"http://testmanifest.com/icon-16.png",
-    "48":"http://testmanifest.com/icon-48.png",
-    "128":"http://testmanifest.com/icon-128.png"
+    "60":"/style/icons/60/weather.png",
+    "120":"/style/icons/weather.png"
   },
   "installs_allowed_from":[
     "*"
